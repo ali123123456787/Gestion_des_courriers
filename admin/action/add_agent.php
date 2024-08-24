@@ -25,19 +25,32 @@ if (isset($_POST['add'])) {
 
     if (mysqli_query($con, $sql)) {
 
-        $agent_id = mysqli_insert_id($conn);
+        $agent_id = mysqli_insert_id($con);
 
         // Create notification content
-        $contenu_not = "Un nouveau agent a été créer sous nom: '$nom_agent $prenom_agent";
+        $contenu_not = "Un nouveau agent a été créé sous nom: '$name $prenom'";
         $category = "Inscription";
 
-        // Insert notification into the notification table
-        $notification_sql = "INSERT INTO notification (id_cour, id_agent, contenu_not, category, created_at, updated_at, close_not) 
-                VALUES (NULL, '$agent_id', '$contenu_not', $category, NOW(), NOW(), 0)";
-        if (mysqli_query($conn, $notification_sql)) {
-            echo '<script>alert("Agent ajouté avec succès! Notification created."); window.location.href="http://localhost:8080/admin/index.php";</script>';
+        // Prepare the notification insert query
+        $notification_sql = $con->prepare("INSERT INTO notification (id_cour, id_agent, contenu_not, category, created_at, updated_at, close_not) 
+                                           VALUES (NULL, ?, ?, ?, NOW(), NOW(), 0)");
+
+        // Check if the statement was prepared successfully
+        if ($notification_sql) {
+            // Bind the parameters to the placeholders
+            $notification_sql->bind_param("iss", $agent_id, $contenu_not, $category);
+
+            // Execute the prepared statement
+            if ($notification_sql->execute()) {
+                echo '<script>alert("Agent ajouté avec succès! Notification created."); window.location.href="http://localhost:8080/admin/index.php";</script>';
+            } else {
+                echo '<script>alert("Agent ajouté avec succès, mais la notification n\'a pas pu être créée."); window.location.href="http://localhost:8080/admin/index.php";</script>';
+            }
+
+            // Close the statement
+            $notification_sql->close();
         } else {
-            echo '<script>alert("Agent ajouté avec succès, mais la notification n\'a pas pu être créée."); window.location.href="http://localhost:8080/admin/index.php";</script>';
+            echo '<script>alert("Failed to prepare the notification statement."); window.location.href="http://localhost:8080/admin/index.php";</script>';
         }
     } else {
         echo '<script>alert("Erreur lors de l\'ajout de l\'agent."); window.location.href="http://localhost:8080/admin/index.php";</script>';
