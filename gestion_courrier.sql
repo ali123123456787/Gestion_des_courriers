@@ -28,12 +28,13 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `id` int(5) UNSIGNED NOT NULL,
+  `id` int(5) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 INSERT INTO `admin` (`email`, `name`, `password`, `created_at`, `updated_at`)
@@ -47,7 +48,7 @@ VALUES ('admin@gmail.com', 'Admin', '$2y$10$GQqheqSmGW1ioRKQM0vsbuRHp4A0uJVtvQlY
 --
 
 CREATE TABLE `agent` (
-  `id_agent` int(11) NOT NULL,
+  `id_agent` int(11) NOT NULL AUTO_INCREMENT,
   `nom_agent` varchar(100) NOT NULL,
   `prenom_agent` varchar(100) NOT NULL,
   `email_agent` varchar(100) NOT NULL,
@@ -55,7 +56,8 @@ CREATE TABLE `agent` (
   `password` varchar(255) NOT NULL,
   `logical_delete` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id_agent`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -79,12 +81,13 @@ CREATE TABLE `contact` (
 --
 
 CREATE TABLE `courrier` (
-  `id_courrier` int(11) NOT NULL,
+  `id_courrier` int(11) NOT NULL AUTO_INCREMENT,
   `file_cour` varchar(255) NOT NULL,
   `titre_cour` varchar(255) NOT NULL,
   `logical_delete` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id_courrier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -109,14 +112,15 @@ CREATE TABLE `courrier_agent` (
 --
 
 CREATE TABLE `notification` (
-  `id_not` int(11) NOT NULL,
+  `id_not` int(11) NOT NULL AUTO_INCREMENT,
   `id_cour` int(11) DEFAULT NULL,
   `id_agent` int(11) NOT NULL,
   `contenu_not` text NOT NULL,
   `category` varchar(100) NOT NULL,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `close_not` tinyint(1) NOT NULL DEFAULT 0
+  `close_not` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id_not`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 

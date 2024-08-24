@@ -66,7 +66,6 @@ if (!isset($_SESSION['user'])) {
                 $notifications[] = $row;
             }
         }
-
         ?>
         <ul class="navbar-nav navbar-nav-right" style="gap:1.5rem">
         <li class="nav-item dropdown">
@@ -158,8 +157,9 @@ if (!isset($_SESSION['user'])) {
             </a>
             <div class="collapse" id="auth">
               <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/login.html"> Login </a></li>
-                <li class="nav-item"> <a class="nav-link" href="pages/samples/register.html"> Register </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> information compte </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Login </a></li>
+                <li class="nav-item"> <a class="nav-link" href=""> Register </a></li>
               </ul>
             </div>
           </li>
@@ -249,7 +249,7 @@ if (!isset($_SESSION['user'])) {
               echo '<h3 class="text-lg font-semibold mb-2">List des Courriers</h3>';
               while ($row = mysqli_fetch_assoc($result)) {
                   echo '<div class="bg-white shadow-md rounded-lg p-4 mb-4">';
-                  echo '<div class="side_mail"><p class="p-2 text-white" style="background: grey;width:20%;border-radius: 0.2rem;"><span class="font-bold">ID Courrier:</span> ' . $row['id_courrier'] . '</p> <p><a href="/courriers/' . $row['file_cour'] . '" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700" download>Télécharger le courrier</a></p></div>';
+                  echo '<div class="side_mail"><p class="p-2 text-white" style="background: grey;width:20%;border-radius: 0.2rem;"><span class="font-bold">ID Courrier:</span> ' . $row['id_courrier'] . '</p> <p><a href="/courriers/' . $row['file_cour'] . '" style="background: #000000d6;" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700" download>Télécharger le courrier</a></p></div>';
                   echo '<p><span class="font-bold">Titre Courrier:</span> ' . $row['titre_cour'] . '</p>';
                   echo '<p><span class="font-bold">Fichier Courrier:</span> ' . $row['file_cour'] . '</p>';
                   echo '<p><span class="font-bold">Identifion Agent:</span> ' . $row['id_ag'] . '</p>';
