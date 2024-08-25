@@ -56,7 +56,7 @@ if(isset($_SESSION)){
                 </div>
             </div>
                 <div class="col-12 text-center">
-                    <button type="submit" name="envoyer" class="btn btn-primary btn-lg">Envoyer</button>
+                    <button type="submit" name="envoyer" class="btn btn-primary btn-lg">Inscrire</button>
                 </div>
             </div>
         </form>

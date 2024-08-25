@@ -1,3 +1,10 @@
+<?php
+if (session_status() == PHP_SESSION_NONE){
+    session_start();
+}
+$isLoggedIn = isset($_SESSION['user']) && $_SESSION['user'] === true;
+
+?>
 <!DOCTYPE html>
 	<html lang="en">
 <head>
@@ -26,15 +33,15 @@
         
 <body>
 <!-- header -->
-<div class="banner-top">
-		<div class="contact-bnr-w3-agile">
+		<div class="banner-top">
+			<div class="contact-bnr-w3-agile">
 			<ul>
 				<li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:info@example.com">gestioncourrier@gmail.com</a></li>
 				<li><i class="fa fa-phone" aria-hidden="true"></i>+229 99 23 92 87</li>	
 					</ul>
 				</div>
 				<div class="clearfix"></div>
-			</div>
+		</div>
 		<div class="w3_navigation">
 			<div class="container">
 				<nav class="navbar navbar-default">
@@ -52,7 +59,9 @@
 						<nav class="menu menu--iris">
 							<ul class="nav navbar-nav menu__list">
 								<li class="menu__item menu__item--current"><a href="" class="menu__link">Acceuil</a></li>
-								<li class="menu__item"><a href="#about" class="menu__link scroll">Les Courriers</a></li>
+								<li class="menu__item">
+                					<a href="<?php echo $isLoggedIn ? 'http://localhost:8080/dashboard/' : 'http://localhost:8080/connexion.php'; ?>" class="">Mes Courriers</a>
+            					</li>
 								<li class="menu__item"><a href="#contact" class="menu__link scroll">Contact </a></li>
 								<li class="menu__item"><a href="connexion.php" class="">Mon compte </a></li>
                                 <!-- <li class="menu__item"><a href="admin.php" class="">Admin</a></li> -->
@@ -79,8 +88,8 @@
 										<h3>Controler l'etat de vos courrier</h3>
 											<p>Bienvenue sur la Plateforme </p>
 										<div class="agileits_w3layouts_more menu__item">
-					<a href="connexion.php" class="menu__link" data-toggle="modal" data-target="#myModal"> Inscrivez-vous</a>
-				</div>
+											<a href="connexion.php" class="menu__link" data-toggle="modal" data-target="#myModal"> Inscrivez-vous</a>
+										</div>
 									</div>	
 								</div>
 							</div>
@@ -128,16 +137,15 @@
         </div> -->
 
         <?php
-    $server = "localhost";
-    $login = "root";
-    $pass = "1234";
-    $dbname = "gestion_courrier";
-    $resultat = "";
-    $connexe = new mysqli("localhost", "root", "1234", "gestion_courrier");
-    $requette = "SELECT * FROM courrier ";
-    $resultat = $connexe->query($requette);
-
-    ?>
+			$server = "localhost";
+			$login = "root";
+			$pass = "1234";
+			$dbname = "gestion_courrier";
+			$resultat = "";
+			$connexe = new mysqli("localhost", "root", "1234", "gestion_courrier");
+			$requette = "SELECT * FROM courrier ";
+			$resultat = $connexe->query($requette);
+		?>
 
 
   
@@ -307,26 +315,26 @@
         <!--tabs-->
         <script src="js/easy-responsive-tabs.js"></script>
         <script>
-        $(document).ready(function () {
-        $('#horizontalTab').easyResponsiveTabs({
-        type: 'default', //Types: default, vertical, accordion           
-        width: 'auto', //auto or any width like 600px
-        fit: true,   // 100% fit in a container
-        closed: 'accordion', // Start closed if in accordion view
-        activate: function(event) { // Callback function if tab is switched
-        var $tab = $(this);
-        var $info = $('#tabInfo');
-        var $name = $('span', $info);
-        $name.text($tab.text());
-        $info.show();
-        }
-        });
-        $('#verticalTab').easyResponsiveTabs({
-        type: 'vertical',
-        width: 'auto',
-        fit: true
-        });
-        });
+			$(document).ready(function () {
+			$('#horizontalTab').easyResponsiveTabs({
+			type: 'default', //Types: default, vertical, accordion           
+			width: 'auto', //auto or any width like 600px
+			fit: true,   // 100% fit in a container
+			closed: 'accordion', // Start closed if in accordion view
+			activate: function(event) { // Callback function if tab is switched
+			var $tab = $(this);
+			var $info = $('#tabInfo');
+			var $name = $('span', $info);
+			$name.text($tab.text());
+			$info.show();
+			}
+			});
+			$('#verticalTab').easyResponsiveTabs({
+			type: 'vertical',
+			width: 'auto',
+			fit: true
+			});
+			});
         </script>
         <!--//tabs-->
         <!-- smooth scrolling -->

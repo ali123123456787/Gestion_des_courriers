@@ -27,7 +27,7 @@ if (isset($_POST['send'])) {
                 $id_admin = 1;
 
                 // Insert into courrier_agent table
-                $sql_courrier_agent = "INSERT INTO courrier_agent (id_cour, id_ag, id_admin, created_at, updated_at) VALUES ('$id_courrier', '$agent_recepteur', '$id_admin', NOW(), NOW())";
+                $sql_courrier_agent = "INSERT INTO courrier_agent (id_cour, id_ag_destinataire, id_envoyeur, envoyeur_type, created_at, updated_at) VALUES ('$id_courrier', '$agent_recepteur', '$id_admin', 'admin', NOW(), NOW())";
 
                 if (mysqli_query($con, $sql_courrier_agent)) {
                     // Insert into notification table

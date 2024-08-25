@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE){
   session_start();
 }
   
-  
+
 if (!isset($_SESSION['user'])) {
   header('location: http://localhost:8080/');
 } 
@@ -30,6 +30,7 @@ if (!isset($_SESSION['user'])) {
 </head>
 
 <body>
+  
   <div class="container-scroller">
     <!-- partial:partials/_navbar.html -->
     <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -190,9 +191,9 @@ if (!isset($_SESSION['user'])) {
           
           // Base SQL query for counting the results
           $count_sql = "SELECT COUNT(c.id_courrier) AS total 
-                        FROM courrier c
-                        JOIN courrier_agent ca ON c.id_courrier = ca.id_cour
-                        WHERE ca.id_ag = '$id_agent' AND c.logical_delete = 0";
+              FROM courrier c
+              JOIN courrier_agent ca ON c.id_courrier = ca.id_cour
+              WHERE ca.id_ag_destinataire = '$id_agent' AND c.logical_delete = 0";
           
           // Append search filter to the count query if a search query is set
           if ($search_query) {
@@ -214,24 +215,25 @@ if (!isset($_SESSION['user'])) {
           
           // Base SQL query for retrieving the results
           $sql = "SELECT 
-                      c.id_courrier, 
-                      c.file_cour, 
-                      c.titre_cour, 
-                      c.created_at, 
-                      c.updated_at, 
-                      ca.id_cour_ag, 
-                      ca.id_cour, 
-                      ca.id_ag, 
-                      ca.id_admin, 
-                      ca.created_at AS ca_created_at, 
-                      ca.updated_at AS ca_updated_at
-                  FROM 
-                      courrier c
-                  JOIN 
-                      courrier_agent ca ON c.id_courrier = ca.id_cour
-                  WHERE 
-                      ca.id_ag = '$id_agent' AND 
-                      c.logical_delete = 0";
+            c.id_courrier, 
+            c.file_cour, 
+            c.titre_cour, 
+            c.created_at, 
+            c.updated_at, 
+            ca.id_cour_ag, 
+            ca.id_cour, 
+            ca.id_ag_destinataire, 
+            ca.id_envoyeur, 
+            ca.envoyeur_type, 
+            ca.created_at AS ca_created_at, 
+            ca.updated_at AS ca_updated_at
+        FROM 
+            courrier c
+        JOIN 
+            courrier_agent ca ON c.id_courrier = ca.id_cour
+        WHERE 
+            ca.id_ag_destinataire = '$id_agent' AND 
+            c.logical_delete = 0";
           
           // Append search filter to the result query if a search query is set
           if ($search_query) {
@@ -252,7 +254,8 @@ if (!isset($_SESSION['user'])) {
                   echo '<div class="side_mail"><p class="p-2 text-white" style="background: grey;width:20%;border-radius: 0.2rem;"><span class="font-bold">ID Courrier:</span> ' . $row['id_courrier'] . '</p> <p><a href="/courriers/' . $row['file_cour'] . '" style="background: #000000d6;" class="bg-blue-500 text-white p-2 rounded hover:bg-blue-700" download>Télécharger le courrier</a></p></div>';
                   echo '<p><span class="font-bold">Titre Courrier:</span> ' . $row['titre_cour'] . '</p>';
                   echo '<p><span class="font-bold">Fichier Courrier:</span> ' . $row['file_cour'] . '</p>';
-                  echo '<p><span class="font-bold">Identifion Agent:</span> ' . $row['id_ag'] . '</p>';
+                  echo '<p><span class="font-bold">Identifion Agent:</span> ' . $row['id_ag_destinataire'] . '</p>';
+                  echo '<p><span class="font-bold">Type Expediteur:</span> ' . $row['envoyeur_type'] . '</p>';
                   echo '<p><span class="font-bold">Date d\'envoi du Courrier:</span> ' . $row['ca_created_at'] . '</p>';
                   echo '</div>';
               }
