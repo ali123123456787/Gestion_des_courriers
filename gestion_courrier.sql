@@ -97,12 +97,16 @@ CREATE TABLE `courrier` (
 --
 
 CREATE TABLE `courrier_agent` (
-  `id_cour_ag` int(11) NOT NULL,
+  `id_cour_ag` int(11) NOT NULL AUTO_INCREMENT,
   `id_cour` int(11) NOT NULL,
-  `id_ag` int(11) NOT NULL,
-  `id_admin` int(5) UNSIGNED NOT NULL,
+  `id_ag_destinataire` int(11) NOT NULL,  -- L'agent qui reçoit le courrier
+  `id_envoyeur` int(11) NULL,  -- Peut être soit l'ID d'un agent, soit l'ID d'un admin
+  `envoyeur_type` ENUM('admin', 'agent') NOT NULL,  -- Type d'envoyeur : admin ou agent
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id_cour_ag`),
+  FOREIGN KEY (`id_cour`) REFERENCES `courriers`(`id_cour`) ON DELETE CASCADE,
+  FOREIGN KEY (`id_ag_destinataire`) REFERENCES `agents`(`id_ag`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
